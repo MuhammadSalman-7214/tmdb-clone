@@ -36,3 +36,42 @@
     transform: rotate(360deg);
   }
 }
+
+.doubleColor {
+  background: #17ead9;
+  background: -webkit-linear-gradient(45deg, #17ead9, #6078ea)!important;
+  background: linear-gradient(78deg, #17ead9, #6078ea)!important;
+}
+
+
+.slider-container {
+  position: relative;
+}
+
+.slider-wrapper {
+  backdrop-filter: blur(1px); /* Adjust the blur amount as needed */
+  -webkit-backdrop-filter: blur(1px); /* For Safari */
+  background-color: rgba(255, 255, 255, 0.39); /* Adjust the background color and opacity as needed */
+}
+
+.bg-bars-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.bg-bars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  background-color: white;
+}
+
+.bar {
+  position: absolute;
+  background-color: #2b8bf3;
+  width: 4px; /* Adjust width as needed */
+  bottom: 0;
+}
