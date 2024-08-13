@@ -4,7 +4,7 @@ const SearchBanner = () => {
   return (
     <div
       style={{
-        backgroundImage: 'url("./images/searchBanner.jpg")',
+        backgroundImage: 'url("./images/banner.jpg")',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         height: '340px',
@@ -13,8 +13,8 @@ const SearchBanner = () => {
       }}
       className='flex items-center justify-center'
     >
-      <div className='text-left px-10 py-6' style={{ position: 'absolute', left: '0', right: '0', top: '40px', bottom: '0' }}>
-        <h2 className='text-white text-3xl font-bold mb-4'>Welcome.</h2>
+      <div className='text-left px-10 py-6' style={{ position: 'absolute', left: '0', right: '0', top: '48px', bottom: '0' }}>
+        <h2 className='text-white text-3xl font-bold mb-2'>Welcome.</h2>
         <h3 className='text-white text-3xl font-bold mb-10'>
           Millions of movies, TV shows and people to discover. Explore now.
         </h3>
@@ -24,7 +24,7 @@ const SearchBanner = () => {
             placeholder="Search for a movie, TV show, person..."
             className='px-4 py-3 rounded-full w-full pr-20 text-grey-200'
           />
-          <button className='absolute right-0 top-0 bottom-0 px-7 py-2 text-white rounded-full doubleColor font-bold'>
+          <button className='absolute right-0 top-0 bottom-0 px-7 py-2 text-white rounded-full doubleColor font-bold hover:text-black'>
             Search
           </button>
         </div>

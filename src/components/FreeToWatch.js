@@ -5,24 +5,9 @@ import 'slick-carousel/slick/slick-theme.css';
 import '../App.css'; // Ensure this file includes your CSS variables
 import { trendingToday } from '../api/trendingToday'; // Adjusted import for your API
 
-const Trending = () => {
-  const [selected, setSelected] = useState('today');
-  const [bars, setBars] = useState([]);
+const FreeToWatch = () => {
+  const [selected, setSelected] = useState('movies');
 
-  useEffect(() => {
-    const generateBars = () => {
-      const barCount = 100; // Number of bars
-      const newBars = [];
-      for (let i = 0; i < barCount; i++) {
-        newBars.push({
-          left: `${(i * 1)}%`, // Position the bars with some spacing
-          height: `${Math.random() * 60 + 60}px` // Random height between 20px and 80px
-        });
-      }
-      setBars(newBars);
-    };
-    generateBars();
-  }, []);
 
   const selectedStyle = {
     backgroundColor: 'rgb(3, 37, 65)',
@@ -85,24 +70,24 @@ const Trending = () => {
   return (
     <div className="relative overflow-hidden bg-bars-container mb-10">
       <div className='flex flex-col sm:flex-row sm:items-center sm:space-x-4 my-3 p-1 rounded-lg px-4 sm:px-8 lg:px-12'>
-        <h2 className='text-2xl font-semibold mb-4 sm:mb-0'>Trending</h2>
+        <h2 className='text-2xl font-semibold mb-4 sm:mb-0'>Free To Watch</h2>
         <div className='relative flex space-x-4 sm:space-x-2 rounded-full' style={{border:'1px solid rgb(3, 37, 65)'}}>
           <button
-            onClick={() => setSelected('today')}
-            style={selected === 'today' ? selectedStyle : defaultStyle}
+            onClick={() => setSelected('movies')}
+            style={selected === 'movies' ? selectedStyle : defaultStyle}
             className='px-4 py-2 rounded-full text-sm font-medium'
           >
-            <span style={selected === 'today' ? gradientText : {}}>
-              Today
+            <span style={selected === 'movies' ? gradientText : {}}>
+            Movies
             </span>
           </button>
           <button
-            onClick={() => setSelected('week')}
-            style={selected === 'week' ? selectedStyle : defaultStyle}
+            onClick={() => setSelected('tv')}
+            style={selected === 'tv' ? selectedStyle : defaultStyle}
             className='px-4 py-2 rounded-full text-sm font-medium'
           >
-            <span style={selected === 'week' ? gradientText : {}}>
-              This Week
+            <span style={selected === 'tv' ? gradientText : {}}>
+              TV
             </span>
           </button>
         </div>
@@ -116,16 +101,7 @@ const Trending = () => {
           position: 'relative',
         }}
       >
-        {/* Background Design */}
-        <div className="bg-bars">
-          {bars.map((bar, index) => (
-            <div
-              key={index}
-              className="bar"
-              style={{ left: bar.left, height: bar.height }}
-            />
-          ))}
-        </div>
+     
 
         {/* Horizontal Slider for Trending */}
         <div className="slider-wrapper ps-8">
@@ -144,7 +120,7 @@ const Trending = () => {
                     </a>
                     <div className='absolute top-2 right-2'>
                       <a href="#" aria-label="View Item Options">
-                        <div className='bg-white px-2 pb-1  rounded-full hover:bg-blue-400'>
+                        <div className='bg-gray-200 px-2 pb-1  rounded-full hover:bg-blue-400'>
                         <i class="fa-solid fa-ellipsis text-xs"></i>
                         </div>
                       </a>
@@ -180,4 +156,4 @@ const Trending = () => {
   );
 };
 
-export default Trending;
+export default FreeToWatch;

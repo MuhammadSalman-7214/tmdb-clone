@@ -42,6 +42,32 @@
   background: -webkit-linear-gradient(45deg, #17ead9, #6078ea)!important;
   background: linear-gradient(78deg, #17ead9, #6078ea)!important;
 }
+.doubleColor1 {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ea7d17;
+  background: -webkit-linear-gradient(45deg, #f5b67b, #fe36d9)!important;
+  background: linear-gradient(78deg, #f5b67b, #fe36d9)!important;
+}
+.doubleColor2 {
+  width: 7px;
+  height:7px;
+  border-radius: 50%;
+  background: #0ed2c2;
+  background: -webkit-linear-gradient(45deg, #94f8ef, #0ed2c2)!important;
+  background: linear-gradient(78deg, #94f8ef, #0ed2c2)!important;
+}
+.allTime {
+  background: #ea7d17;
+  background: -webkit-linear-gradient(45deg, #f5b67b, #fe36d9)!important;
+  background: linear-gradient(78deg, #f5b67b, #fe36d9)!important;
+}
+.thisWeek {
+  background: #0ed2c2;
+  background: -webkit-linear-gradient(45deg, #94f8ef, #0ed2c2)!important;
+  background: linear-gradient(78deg, #94f8ef, #0ed2c2)!important;
+}
 
 
 .slider-container {
@@ -52,6 +78,11 @@
   backdrop-filter: blur(1px); /* Adjust the blur amount as needed */
   -webkit-backdrop-filter: blur(1px); /* For Safari */
   background-color: rgba(255, 255, 255, 0.39); /* Adjust the background color and opacity as needed */
+}
+.banner-bg {
+  backdrop-filter: blur(1px); /* Adjust the blur amount as needed */
+  -webkit-backdrop-filter: blur(1px); /* For Safari */
+  background-color: rgba(64, 64, 64, 0.632); /* Adjust the background color and opacity as needed */
 }
 
 .bg-bars-container {
