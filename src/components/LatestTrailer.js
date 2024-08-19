@@ -1,12 +1,110 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import '../App.css';
-import { latestTrailer } from '../api/latestTrailer';
+import axios from 'axios';
+import Modal from 'react-modal';
+
+const API_KEY = process.env.REACT_APP_API_KEY;
+const BASE_URL = 'https://api.themoviedb.org/3';
 
 const LatestTrailer = () => {
+  const [trailers, setTrailers] = useState([]);
+  const [backgroundImg, setBackgroundImg] = useState('');
   const [selected, setSelected] = useState('popular');
+  const [loading, setLoading] = useState(true);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [videoUrl, setVideoUrl] = useState('');
+
+  const fetchTrailers = async (category) => {
+    setLoading(true);
+    try {
+      let endpoint = '';
+      switch (category) {
+        case 'popular':
+          endpoint = '/movie/popular';
+          break;
+        case 'streaming':
+          endpoint = '/movie/now_playing';
+          break;
+        case 'tv':
+          endpoint = '/tv/popular';
+          break;
+        case 'rent':
+          endpoint = '/movie/upcoming';
+          break;
+        case 'theaters':
+          endpoint = '/movie/now_playing';
+          break;
+        default:
+          endpoint = '/movie/popular';
+      }
+
+      const response = await axios.get(`${BASE_URL}${endpoint}`, {
+        params: {
+          api_key: API_KEY,
+          language: 'en-US',
+        },
+      });
+
+      const results = response.data.results || [];
+      if (results.length > 0) {
+        const videoResponses = await Promise.all(results.map(result =>
+          axios.get(`${BASE_URL}/movie/${result.id}/videos`, {
+            params: {
+              api_key: API_KEY,
+              language: 'en-US',
+            },
+          })
+        ));
+        
+        const trailersWithVideos = results.map((result, index) => ({
+          ...result,
+          video: videoResponses[index].data.results[0] || null,
+        }));
+
+        setTrailers(trailersWithVideos);
+        const backdrop = results[0].backdrop_path;
+        setBackgroundImg(`https://image.tmdb.org/t/p/original${backdrop}`);
+      } else {
+        setTrailers([]);
+        setBackgroundImg('');
+      }
+    } catch (error) {
+      console.error(`Error fetching ${category} trailers:`, error);
+      setTrailers([]);
+      setBackgroundImg('');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchTrailers(selected);
+  }, [selected]);
+
+  const handleVideoClick = (e, videoKey) => {
+    e.stopPropagation();
+    setVideoUrl(`https://www.youtube.com/embed/${videoKey}`);
+    setModalIsOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalIsOpen(false);
+    setVideoUrl('');
+  };
+
+  const handleMouseEnter = (backdropPath) => {
+    if (backdropPath) {
+      setBackgroundImg(`https://image.tmdb.org/t/p/original${backdropPath}`);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    
+    setBackgroundImg('');
+  };
 
   const selectedStyle = {
     backgroundColor: 'rgb(3, 37, 65)',
@@ -69,15 +167,27 @@ const LatestTrailer = () => {
   return (
     <div
       style={{
-        backgroundImage: 'url("./images/trailerBanner.jpg")',
+        backgroundImage: `url(${backgroundImg})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         height: '100%',
         width: '100%',
         position: 'relative',
+        zIndex: -10
       }}
       className='flex items-center justify-center banner-bg mb-4'
     >
+      <div
+        style={{
+          background: 'linear-gradient(78deg, #38aae3a6, #38aae3a6)',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          zIndex: -10,
+        }}
+      />
       <div className="relative overflow-hidden bg-bars-container banner-bg w-full px-4 sm:px-8 lg:px-12">
         <div className='flex flex-col sm:flex-row sm:items-center sm:space-x-4 my-3 p-1 rounded-lg'>
           <h2 className='text-2xl font-semibold mb-4 sm:mb-0 text-white'>
@@ -133,45 +243,79 @@ const LatestTrailer = () => {
         </div>
 
         <div className='relative overflow-x-auto slider-container'>
-          <Slider {...sliderSettings}>
-            {latestTrailer.map(item => (
-              <div key={item.id} className='inline-block w-full px-2'>
-                <div className='rounded-lg'>
-                  <div className='relative'>
-                    <a title={item.title}>
-                      <img
-                        loading="lazy"
-                        className='w-full h-48 sm:h-40 rounded-lg object-cover'
-                        src={item.image}
-                        alt={item.title}
-                      />
-                    </a>
-                    <div className='absolute top-2 right-2'>
-                      <a href="#" aria-label="View Item Options">
-                        <div className='bg-white px-2 pb-1 rounded-full hover:bg-blue-400'>
-                          <i className="fa-solid fa-ellipsis text-xs"></i>
+          {loading ? (
+            <p className='text-white text-center'>Loading...</p>
+          ) : (
+            <Slider {...sliderSettings}>
+              {trailers.length > 0 ? (
+                trailers.map(item => (
+                  item.video && item.video.key ? (
+                    <div
+                      key={item.id}
+                      className='inline-block w-full px-2'
+                      onMouseEnter={() => handleMouseEnter(item.backdrop_path)}
+                      onMouseLeave={handleMouseLeave}
+                    >
+                      <div className='rounded-lg overflow-hidden transform transition-transform duration-300 hover:scale-105'>
+                      <div className='relative rounded-lg'>
+                        <a
+                          title={item.title}
+                          onClick={(e) => handleVideoClick(e, item.video.key)}
+                          className='cursor-pointer rounded-lg'
+                        >
+                          <img
+                            src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
+                            alt={item.title}
+                            className='w-full h-40 object-cover rounded-lg '
+                          />
+                          <div className='absolute top-0 left-0 w-full h-full flex items-center justify-center' style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+                            <span className='text-white text-4xl'>
+                              <i className="fa-solid fa-play"></i>
+                            </span>
+                          </div>
+                        </a>
+                      </div>
+
+                        
                         </div>
-                      </a>
+                        <p className='text-white text-lg mt-2'>{item.title}</p>
                     </div>
-                  </div>
-                  <div className='mt-4 ms-2'>
-                    <h2 className='text-lg font-semibold'>
-                      <a className='text-white'>
-                        {item.title.length > 25 ? `${item.title.slice(0, 22)}...` : item.title}
-                      </a>
-                    </h2>
-                    <h2 className='text-sm mt-2 mb-4'>
-                      <a className='text-white'>{item.description}</a>
-                    </h2>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </Slider>
+                  ) : null
+                ))
+              ) : (
+                <p className='text-white text-center'>No trailers available.</p>
+              )}
+            </Slider>
+          )}
         </div>
       </div>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={handleCloseModal}
+        contentLabel="Video Modal"
+        ariaHideApp={false}
+        className='modal'
+        overlayClassName='overlay'
+      >
+        <button onClick={handleCloseModal} className='modal-close-button'>
+          X
+        </button>
+        {videoUrl && (
+          <iframe
+            width="100%"
+            height="115"
+            src={videoUrl}
+            title="YouTube video player"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            className='w-full h-80'
+          />
+        )}
+      </Modal>
     </div>
   );
-}
+};
 
 export default LatestTrailer;
+

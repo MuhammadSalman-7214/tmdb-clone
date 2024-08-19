@@ -29,8 +29,8 @@ const Footer = () => {
             </button>
           </div>
           <div className="flex-grow flex flex-wrap md:pl-20 -mb-10 md:mt-0 mt-10 md:text-left text-center pt-5">
-            <div className="lg:w-1/5 md:w-1/2 w-full px-1 mx-4">
-              <h2 className="title-font font-bold text-white tracking-widest text-sm mb-3">THE BASICS</h2>
+            <div className="lg:w-1/5 md:w-1/2 w-full">
+              <h2 className="title-font font-bold text-white tracking-widest text-sm">THE BASICS</h2>
               <nav className="list-none mb-10">
                 <li><a className="text-white">ABOUT TMBD</a></li>
                 <li><a className="text-white">CONTACT US</a></li>
@@ -39,7 +39,7 @@ const Footer = () => {
                 <li><a className="text-white">SYSTEM STATUS</a></li>
               </nav>
             </div>
-            <div className="lg:w-1/5 md:w-1/2 w-full px-1 mx-4">
+            <div className="lg:w-1/5 md:w-1/2 w-full px-1">
               <h2 className="title-font font-bold text-white tracking-widest text-sm mb-3">GET INVOLVED</h2>
               <nav className="list-none mb-10">
                 <li><a className="text-white">Contribution Bible</a></li>
@@ -47,7 +47,7 @@ const Footer = () => {
                 <li><a className="text-white">Add New TV Show</a></li>
               </nav>
             </div>
-            <div className="lg:w-1/5 md:w-1/2 w-full px-1 mx-4">
+            <div className="lg:w-1/5 md:w-1/2 w-full px-1">
               <h2 className="title-font font-bold text-white tracking-widest text-sm mb-3">COMMUNITY</h2>
               <nav className="list-none mb-10">
                 <li><a className="text-white">Guidelines</a></li>
@@ -55,7 +55,7 @@ const Footer = () => {
                 <li><a className="text-white">LeaderBoard</a></li>
               </nav>
             </div>
-            <div className="lg:w-1/5 md:w-1/2 w-full px-1 mx-4">
+            <div className="lg:w-1/5 md:w-1/2 w-full px-1">
               <h2 className="title-font font-bold text-white tracking-widest text-sm mb-3">LEGAL</h2>
               <nav className="list-none mb-10">
                 <li><a className="text-white">Terms of Use</a></li>
