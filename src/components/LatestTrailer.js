@@ -167,28 +167,28 @@ const LatestTrailer = () => {
   return (
     <div
       style={{
-        backgroundImage: `url(${backgroundImg})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        height: '100%',
-        width: '100%',
-        position: 'relative',
-        zIndex: -10
+      backgroundImage: `url(${backgroundImg})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      height: '100%',
+      width: '100%',
+      position: 'relative',
       }}
       className='flex items-center justify-center banner-bg mb-4'
     >
       <div
         style={{
-          background: 'linear-gradient(78deg, #38aae3a6, #38aae3a6)',
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          zIndex: -10,
-        }}
+        background: 'linear-gradient(78deg, #38aae3a6, #38aae3a6)',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        zIndex: 1, // Reduced to make sure it's behind the content
+        pointerEvents: 'none', // Ensures the overlay does not capture clicks
+      }}
       />
-      <div className="relative overflow-hidden bg-bars-container banner-bg w-full px-4 sm:px-8 lg:px-12">
+      <div className="relative z-10 w-full px-4 sm:px-8 lg:px-12">
         <div className='flex flex-col sm:flex-row sm:items-center sm:space-x-4 my-3 p-1 rounded-lg'>
           <h2 className='text-2xl font-semibold mb-4 sm:mb-0 text-white'>
             Latest Trailers

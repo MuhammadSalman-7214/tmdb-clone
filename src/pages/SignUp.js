@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const SignUp = () => {
@@ -157,9 +157,9 @@ const SignUp = () => {
             >
               Sign Up
             </button>
-            <a href='#' className='my-2 md:my-0 md:ml-4 text-md text-[rgba(1,180,228)] hover:border-b-2 border-[rgba(1,200,228)]'>
+            <Link to='/' className='my-2 md:my-0 md:ml-4 text-md text-[rgba(1,180,228)] hover:border-b-2 border-[rgba(1,200,228)]'>
               Cancel
-            </a>
+            </Link>
             </div>
           </form>
         </div>

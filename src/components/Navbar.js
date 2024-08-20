@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import { Link } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Navbar = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isSearchBarOpen, setIsSearchBarOpen] = useState(false);
     const isSmallScreen = useMediaQuery({ maxWidth: 810 });
+
+    const location = useLocation();
+    const navigate = useNavigate();
 
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -13,6 +18,31 @@ const Navbar = () => {
 
     const toggleSearchBar = () => {
         setIsSearchBarOpen(!isSearchBarOpen);
+    };
+    const { query: initialQuery = '', results: initialResults = [] } = location.state || {};
+
+    const [query, setQuery] = useState(initialQuery);
+    const [results, setResults] = useState(initialResults);
+
+    const API_KEY = process.env.REACT_APP_API_KEY;
+    const BASE_URL = 'https://api.themoviedb.org/3';
+
+    const handleSearch = async (e) => {
+        e.preventDefault();
+        if (query.trim() === '') return;
+
+        try {
+            const response = await axios.get(`${BASE_URL}/search/multi`, {
+                params: {
+                    api_key: API_KEY,
+                    query,
+                },
+            });
+            setResults(response.data.results);
+            navigate('/search-results', { state: { query, results: response.data.results } });
+        } catch (error) {
+            console.error('Error fetching search results:', error);
+        }
     };
 
     return (
@@ -166,18 +196,22 @@ const Navbar = () => {
 
             {/* Search Bar */}
             {isSearchBarOpen && (
-                <div className="fixed inset-x-0 top-15 bg-white py-2 text-white z-20">
-                <div className='flex '>
-                    <i class="fa-solid fa-magnifying-glass text-black mt-1  pl-20 pr-4"></i>
-                    <input
-                        type="text"
-                        placeholder="Search for a movie, tv show, person..."
-                        className="w-full  rounded bg-white border-0 text-black"
-                    />
-
-                </div>
+                <div className="fixed inset-x-0 top-15 bg-white py-2 z-20">
+                    <div className='flex'>
+                        <form onSubmit={handleSearch} className="w-full ms-3 flex">
+                            <i className="fa-solid fa-magnifying-glass text-black mt-1 pl-20 pr-4"></i>
+                            <input
+                                type="text"
+                                placeholder="Search for a movie, tv show, person..."
+                                className="w-full rounded bg-white border-0 text-black focus:outline-none focus:border-none"
+                                value={query}
+                                onChange={(e) => setQuery(e.target.value)}
+                            />
+                        </form>
+                    </div>
                 </div>
             )}
+
         </div>
     );
 };

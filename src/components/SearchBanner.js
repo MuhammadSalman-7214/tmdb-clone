@@ -1,26 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const SearchBanner = () => {
   const [query, setQuery] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
   const [backgroundImage, setBackgroundImage] = useState('');
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
-  const API_KEY = process.env.REACT_APP_API_KEY; 
+  const API_KEY = process.env.REACT_APP_API_KEY;
   const BASE_URL = 'https://api.themoviedb.org/3';
 
   useEffect(() => {
     const fetchBackgroundImage = async () => {
       try {
         const response = await axios.get(`${BASE_URL}/trending/movie/week`, {
-          params: {
-            api_key: API_KEY,
-          },
+          params: { api_key: API_KEY },
         });
         const trendingMovies = response.data.results;
         if (trendingMovies.length > 0) {
-         
           const randomMovie = trendingMovies[Math.floor(Math.random() * trendingMovies.length)];
           setBackgroundImage(`https://image.tmdb.org/t/p/original${randomMovie.backdrop_path}`);
         }
@@ -38,12 +36,9 @@ const SearchBanner = () => {
     e.preventDefault();
     try {
       const response = await axios.get(`${BASE_URL}/search/multi`, {
-        params: {
-          api_key: API_KEY,
-          query: query,
-        },
+        params: { api_key: API_KEY, query },
       });
-      setSearchResults(response.data.results);
+      navigate('/search-results', { state: { query, results: response.data.results } });
     } catch (error) {
       console.error('Error fetching search results:', error);
     }
@@ -80,7 +75,7 @@ const SearchBanner = () => {
       <div className='text-left px-10 py-6' style={{ position: 'absolute', left: '0', right: '0', top: '48px', bottom: '0', zIndex: 2 }}>
         <h2 className='text-white text-4xl font-bold mb-2'>Welcome.</h2>
         <h3 className='text-white text-2xl font-bold mb-10'>
-          Millions of movies, TV shows and people to discover. Explore now.
+          Millions of movies, TV shows, and people to discover. Explore now.
         </h3>
         <form onSubmit={handleSearch} className='relative'>
           <input
@@ -97,16 +92,6 @@ const SearchBanner = () => {
             Search
           </button>
         </form>
-      </div>
-
-      {/* Optionally render search results here */}
-      <div className="search-results mt-4">
-        {searchResults.map((result) => (
-          <div key={result.id}>
-            <h4>{result.title || result.name}</h4>
-            <p>{result.overview}</p>
-          </div>
-        ))}
       </div>
     </div>
   );

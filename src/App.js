@@ -9,6 +9,8 @@ import LogIn from './pages/LogIn';
 import Person from './pages/Person';
 import DetailPage from './pages/DetailPage';
 import ResetPassword from './pages/ResetPassword';
+import SearchItemsPage from './pages/SearchItemsPage';
+import PersonDetailPage from './pages/PersonDetailPage';
 
 function App() {
   return (
@@ -16,11 +18,16 @@ function App() {
       <Navbar/>
       <Routes>
         <Route  path="/" element={<Home />} />
+
         <Route  path="/signup" element={<SignUp />} />
         <Route  path="/login" element={<LogIn />} />
-        <Route  path="/person" element={<Person />} />
         <Route  path="/reset-password" element={<ResetPassword />} />
-        <Route path="/detail/:mediaType/:id" element={<DetailPage/>} />
+
+        <Route  path="/person" element={<Person />} />
+        <Route path="/person/:id" element={<PersonDetailPage />} />
+        
+        <Route path="/detail/:mediaType/:id" element={<DetailPage />} />
+        <Route path="/search-results" element={<SearchItemsPage />} />
       </Routes>
       <Footer/>
     </div>
