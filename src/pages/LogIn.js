@@ -11,7 +11,6 @@ const LogIn = () => {
     e.preventDefault();
 
     try {
-      // Step 1: Request a token
       const tokenResponse = await axios.get(
         'https://api.themoviedb.org/3/authentication/token/new',
         {
@@ -22,7 +21,6 @@ const LogIn = () => {
       );
       const requestToken = tokenResponse.data.request_token;
 
-      // Step 2: Validate the request token with login credentials
       await axios.post(
         'https://api.themoviedb.org/3/authentication/token/validate_with_login',
         {
@@ -37,7 +35,6 @@ const LogIn = () => {
         }
       );
 
-      // Step 3: Create a session ID
       const sessionResponse = await axios.post(
         'https://api.themoviedb.org/3/authentication/session/new',
         {
@@ -52,11 +49,9 @@ const LogIn = () => {
 
       const sessionId = sessionResponse.data.session_id;
 
-      // Save the session_id in local storage or state
       localStorage.setItem('tmdbSessionId', sessionId);
 
-      // Redirect to a protected route
-      navigate('/'); // Change this to the route you want to redirect to
+      navigate('/');
 
     } catch (error) {
       console.error('Login failed:', error);
@@ -66,7 +61,7 @@ const LogIn = () => {
 
   return (
     <div className='flex justify-center items-center'>
-      <div className='mx-20 w-full px-4 py-6 bg-white'>
+      <div className='lg:mx-110px px-6 w-full px-4 py-6 bg-white'>
         <p className='text-2xl font-semibold mb-1 text-left'>Login to your account</p>
         <p className='mb-3 text-left text-sm'>
           In order to use the editing and rating capabilities of TMDB, as well as get personal recommendations you will need to login to your account. 

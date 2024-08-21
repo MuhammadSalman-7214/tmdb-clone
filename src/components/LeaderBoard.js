@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 const LeaderBoard = () => {
   const [leaderBoardData, setLeaderBoardData] = useState([]);
 
-  // Replace with your actual TMDB API key
   const API_KEY = process.env.REACT_APP_API_KEY;
   const API_URL = `https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}&language=en-US&page=1`;
 
@@ -11,13 +10,12 @@ const LeaderBoard = () => {
     fetch(API_URL)
       .then(response => response.json())
       .then(data => {
-        // Assuming that the data you want to display is in the results array
         const formattedData = data.results.map((item, index) => ({
           id: index + 1,
           name: item.title,
           image: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
           allTime: item.vote_count.toString(),
-          thisWeek: Math.floor(Math.random() * 1000).toString(), // For demo purposes, randomize thisWeek
+          thisWeek: Math.floor(Math.random() * 1000).toString(),
         }));
         setLeaderBoardData(formattedData);
       })

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect  } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import { Link } from 'react-router-dom';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -7,6 +7,9 @@ import axios from 'axios';
 const Navbar = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isSearchBarOpen, setIsSearchBarOpen] = useState(false);
+    const [isMoviesDropdownOpen, setIsMoviesDropdownOpen] = useState(false);
+    const [isPeopleDropdownOpen, setIsPeopleDropdownOpen] = useState(false);
+    const [isTVShowsDropdownOpen, setIsTVShowsDropdownOpen] = useState(false);
     const isSmallScreen = useMediaQuery({ maxWidth: 810 });
 
     const location = useLocation();
@@ -19,6 +22,18 @@ const Navbar = () => {
     const toggleSearchBar = () => {
         setIsSearchBarOpen(!isSearchBarOpen);
     };
+    const toggleMoviesDropdown = () => {
+        setIsMoviesDropdownOpen(!isMoviesDropdownOpen);
+    };
+
+    const toggleTVShowsDropdown = () => {
+        setIsTVShowsDropdownOpen(!isTVShowsDropdownOpen);
+    };
+
+    const togglePeopleDropdown = () => {
+        setIsPeopleDropdownOpen(!isPeopleDropdownOpen);
+    };
+    
     const { query: initialQuery = '', results: initialResults = [] } = location.state || {};
 
     const [query, setQuery] = useState(initialQuery);
@@ -44,6 +59,14 @@ const Navbar = () => {
             console.error('Error fetching search results:', error);
         }
     };
+    useEffect(() => {
+        // Add or remove 'no-scroll' class based on the mobile menu state
+        if (isMobileMenuOpen) {
+            document.body.classList.add('no-scroll');
+        } else {
+            document.body.classList.remove('no-scroll');
+        }
+    }, [isMobileMenuOpen]);
 
     return (
         <div>
@@ -61,25 +84,25 @@ const Navbar = () => {
                                 </a>
                                 <ul className="hidden md:flex font-medium flex-row space-x-8 rtl:space-x-reverse">
                                     <li className="relative group">
-                                        <a href="#" className="block py-2 px-3 text-sm text-white rounded md:bg-transparent md:p-0 dark:text-white">
+                                        <a className="block py-2 px-3 text-sm text-white rounded md:bg-transparent md:p-0 dark:text-white">
                                             Movies
                                         </a>
                                         <div className="absolute z-10 py-2 hidden group-hover:block group-focus:block w-48 bg-white rounded-lg shadow-md">
-                                            <Link to="#" className="block px-6 py-2 text-sm text-left hover:bg-gray-100">Popular</Link>
-                                            <a href="#" className="block px-6 py-2 text-sm text-left hover:bg-gray-100">Now Playing</a>
-                                            <a href="#" className="block px-6 py-2 text-sm text-left hover:bg-gray-100">Upcoming</a>
-                                            <a href="#" className="block px-6 py-2 text-sm text-left hover:bg-gray-100">Top Rated</a>
+                                            <Link to="/featured-page" state={{ category: 'movie', type: 'popular' }}  className="block px-6 py-2 text-sm text-left hover:bg-gray-100">Popular</Link>
+                                            <Link to="/featured-page" state={{ category: 'movie', type: 'now_playing' }} className="block px-6 py-2 text-sm text-left hover:bg-gray-100">Now Playing</Link>
+                                            <Link to="/featured-page" state={{ category: 'movie', type: 'upcoming' }} className="block px-6 py-2 text-sm text-left hover:bg-gray-100">Upcoming</Link>
+                                            <Link to="/featured-page" state={{ category: 'movie', type: 'top_rated' }} className="block px-6 py-2 text-sm text-left hover:bg-gray-100">Top Rated</Link>
                                         </div>
                                     </li>
                                     <li className="relative group">
-                                        <a href="#" className="block py-2 px-3 text-white text-sm rounded md:bg-transparent md:p-0 dark:text-white">
+                                        <a className="block py-2 px-3 text-white text-sm rounded md:bg-transparent md:p-0 dark:text-white">
                                             TV Shows
                                         </a>
                                         <div className="absolute z-10 py-2 hidden group-hover:block group-focus:block w-48 bg-white rounded-lg shadow-md">
-                                            <a href="#" className="block px-6 py-2 text-sm text-left hover:bg-gray-100">Popular</a>
-                                            <a href="#" className="block px-6 py-2 text-sm text-left hover:bg-gray-100">Airing Today</a>
-                                            <a href="#" className="block px-6 py-2 text-sm text-left hover:bg-gray-100">On TV</a>
-                                            <a href="#" className="block px-6 py-2 text-sm text-left hover:bg-gray-100">Top Rated</a>
+                                            <Link to="/featured-page" state={{ category: 'tv', type: '' }} className="block px-6 py-2 text-sm text-left hover:bg-gray-100">Popular</Link>
+                                            <Link to="/featured-page" state={{ category: 'tv', type: 'airing_today' }} className="block px-6 py-2 text-sm text-left hover:bg-gray-100">Airing Today</Link>
+                                            <Link to="/featured-page" state={{ category: 'tv', type: 'on_the_air' }} className="block px-6 py-2 text-sm text-left hover:bg-gray-100">On TV</Link>
+                                            <Link to="/featured-page" state={{ category: 'tv', type: 'top_rated' }} className="block px-6 py-2 text-sm text-left hover:bg-gray-100">Top Rated</Link>
                                         </div>
                                     </li>
                                     <li className="relative group">
@@ -182,15 +205,45 @@ const Navbar = () => {
                             className={`fixed inset-0 top-16 p-4 md:hidden z-50 w-4/5 transition-transform transform ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`} 
                             style={{ backgroundColor: 'rgb(3, 33, 65)' }}
                         >
-                            <ul className="flex flex-col space-y-4 mt-4 text-left ps-3">
-                                <li><a href="#" className="text-white font-bold">Movies</a></li>
-                                <li><a href="#" className="text-white font-bold">TV Shows</a></li>
-                                <li><Link to="/person" className="text-white font-bold">People</Link></li>
-                                <li><a href="#" className="text-white font-bold">More</a></li>
-                                <li><Link to="/login" className="text-white font-bold">Login</Link></li>
-                            </ul>
+                            <div className="max-h-[calc(100vh-4rem)] overflow-y-auto">
+                                <ul className="flex flex-col space-y-4 mt-4 text-left ps-3">
+                                    <li className="relative">
+                                        <button onClick={toggleMoviesDropdown} className="block py-1 text-white font-bold">
+                                            Movies
+                                        </button>
+                                        <ul className={`space-y-2 ${isMoviesDropdownOpen ? 'block' : 'hidden'}`}>
+                                            <li><Link to="/featured-page" state={{ category: 'movie', type: 'popular' }} className="block py-2 px-4 text-white text-sm">Popular</Link></li>
+                                            <li><Link to="/featured-page" state={{ category: 'movie', type: 'now_playing' }} className="block py-2 px-4 text-white text-sm">Now Playing</Link></li>
+                                            <li><Link to="/featured-page" state={{ category: 'movie', type: 'upcoming' }} className="block py-2 px-4 text-white text-sm">Upcoming</Link></li>
+                                            <li><Link to="/featured-page" state={{ category: 'movie', type: 'top_rated' }} className="block py-2 px-4 text-white text-sm">Top Rated</Link></li>
+                                        </ul>
+                                    </li>
+                                    <li className="relative">
+                                        <button onClick={toggleTVShowsDropdown} className="block py-1 text-white font-bold">
+                                            TV Shows
+                                        </button>
+                                        <ul className={`space-y-2 ${isTVShowsDropdownOpen ? 'block' : 'hidden'}`}>
+                                            <li><Link to="/featured-page" state={{ category: 'tv', type: '' }} className="block py-2 px-4 text-white text-sm">Popular</Link></li>
+                                            <li><Link to="/featured-page" state={{ category: 'tv', type: 'airing_today' }} className="block py-2 px-4 text-white text-sm">Airing Today</Link></li>
+                                            <li><Link to="/featured-page" state={{ category: 'tv', type: 'on_the_air' }} className="block py-2 px-4 text-white text-sm">On TV</Link></li>
+                                            <li><Link to="/featured-page" state={{ category: 'tv', type: 'top_rated' }} className="block py-2 px-4 text-white text-sm">Top Rated</Link></li>
+                                        </ul>
+                                    </li>
+                                    <li className="relative">
+                                        <button onClick={togglePeopleDropdown} className="block py-1 text-white font-bold">
+                                            People
+                                        </button>
+                                        <ul className={`space-y-2 ${isPeopleDropdownOpen ? 'block' : 'hidden'}`}>
+                                            <li><Link to="/person" className="block py-2 px-4 text-white text-sm">Popular People</Link></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="#" className="text-white font-bold">More</a></li>
+                                    <li><Link to="/login" className="text-white font-bold">Login</Link></li>
+                                </ul>
+                            </div>
                         </div>
                     )}
+
                 </div>
             </nav>
 

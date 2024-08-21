@@ -96,7 +96,7 @@ const DetailPage = () => {
           left: 0,
           right: 0,
           bottom: 0,
-          zIndex: 0, // Background layer
+          zIndex: 0,
         }}
       />
       {/* Gradient Overlay */}
@@ -108,7 +108,7 @@ const DetailPage = () => {
           left: 0,
           right: 0,
           bottom: 0,
-          zIndex: 1, // Gradient layer
+          zIndex: 1,
         }}
       />
       {/* Content */}
@@ -140,54 +140,42 @@ const DetailPage = () => {
             </div>
 
             <div className='flex space-x-6'>
-  <div className='relative flex flex-col items-center text-white group'>
-    <div
-      className='flex items-center justify-center rounded-full'
-      style={{ backgroundColor: 'rgb(3, 37, 65)', width: '40px', height: '40px' }}>
-      <i className="fa-solid fa-list mx-auto"></i>
-    </div>
-    {/* <p className='absolute text-sm text-white bg-opacity-75 rounded p-1 mt-8 opacity-0 group-hover:opacity-100 transition-opacity w-full whitespace-nowrap overflow-hidden text-ellipsis' style={{ backgroundColor: 'rgb(3, 37, 65)' }}>
-      Login to create and edit custom lists
-    </p> */}
-  </div>
+                <div className='relative flex flex-col items-center text-white group'>
+                  <div
+                    className='flex items-center justify-center rounded-full'
+                    style={{ backgroundColor: 'rgb(3, 37, 65)', width: '40px', height: '40px' }}>
+                    <i className="fa-solid fa-list mx-auto"></i>
+                  </div>
+                </div>
 
-  <div className='relative flex flex-col items-center text-white group'>
-    <div
-      className='flex items-center justify-center rounded-full'
-      style={{ backgroundColor: 'rgb(3, 37, 65)', width: '40px', height: '40px' }}>
-      <i className="fa-solid fa-heart mx-auto"></i>
-    </div>
-    {/* <p className='absolute text-sm text-white bg-opacity-75 rounded p-1 mt-8 opacity-0 group-hover:opacity-100 transition-opacity w-full whitespace-nowrap overflow-hidden text-ellipsis' style={{ backgroundColor: 'rgb(3, 37, 65)' }}>
-      Login to add this movie to your favorite list
-    </p> */}
-  </div>
+                <div className='relative flex flex-col items-center text-white group'>
+                  <div
+                    className='flex items-center justify-center rounded-full'
+                    style={{ backgroundColor: 'rgb(3, 37, 65)', width: '40px', height: '40px' }}>
+                    <i className="fa-solid fa-heart mx-auto"></i>
+                  </div>
+                </div>
 
-  <div className='relative flex flex-col items-center text-white group'>
-    <div
-      className='flex items-center justify-center rounded-full'
-      style={{ backgroundColor: 'rgb(3, 37, 65)', width: '40px', height: '40px' }}>
-      <i className="fa-solid fa-bookmark mx-auto"></i>
-    </div>
-    {/* <p className='absolute left-0 right-0 w-full text-sm text-white bg-opacity-75 rounded p-1 mt-8 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap overflow-hidden text-ellipsis' style={{ backgroundColor: 'rgb(3, 37, 65)' }}>
-      Login to add this movie to your watchlist
-    </p> */}
-  </div>
+                <div className='relative flex flex-col items-center text-white group'>
+                  <div
+                    className='flex items-center justify-center rounded-full'
+                    style={{ backgroundColor: 'rgb(3, 37, 65)', width: '40px', height: '40px' }}>
+                    <i className="fa-solid fa-bookmark mx-auto"></i>
+                  </div>
+                </div>
 
-  <div
-    className='flex items-center font-semibold text-white hover:text-gray-300'
-    onClick={() => setIsModalOpen(true)}
-  >
-    <i className="fa-solid fa-play mr-2"></i> Play Trailer
-  </div>
-</div>
+                <div
+                  className='flex items-center font-semibold text-white hover:text-gray-300'
+                  onClick={() => setIsModalOpen(true)}
+                >
+                  <i className="fa-solid fa-play mr-2"></i> Play Trailer
+                </div>
+              </div>
 
-
-
-
-            <div>
-              <p className='text-lg mt-4 text-left font-bold text-white'>Overview</p>
-              <p className='text-md text-left text-white'>{itemDetail.overview}</p>
-            </div>
+              <div>
+                <p className='text-lg mt-4 text-left font-bold text-white'>Overview</p>
+                <p className='text-md text-left text-white'>{itemDetail.overview}</p>
+              </div>
           </div>
         </div>
 

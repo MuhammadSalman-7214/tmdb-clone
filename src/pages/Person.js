@@ -7,10 +7,9 @@ const Person = () => {
   const [people, setPeople] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [page, setPage] = useState(1); // Track the current page
-  const [totalPages, setTotalPages] = useState(1); // Track the total number of pages
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
-  // Fetch popular people data from TMDB
   const fetchPopularPeople = async (page) => {
     try {
       const response = await fetch(`https://api.themoviedb.org/3/person/popular?api_key=${API_KEY}&language=en-US&page=${page}`);
@@ -19,7 +18,7 @@ const Person = () => {
       }
       const data = await response.json();
       setPeople(data.results);
-      setTotalPages(data.total_pages); // Update total pages based on response
+      setTotalPages(data.total_pages);
     } catch (error) {
       console.error('Error fetching data:', error);
       setError(error.message);
@@ -29,7 +28,7 @@ const Person = () => {
   };
 
   useEffect(() => {
-    fetchPopularPeople(page); // Fetch data whenever the page changes
+    fetchPopularPeople(page);
   }, [page]);
 
   if (loading) return <div>Loading...</div>;
@@ -49,7 +48,7 @@ const Person = () => {
 
   return (
     <div className='lg:mx-110px'>
-      <h1 className='text-left p-6 font-bold text-2xl'>Popular People</h1>
+      <h1 className='text-left p-6 font-semibold text-2xl'>Popular People</h1>
 
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mx-6'>
         {people.map((person) => (
@@ -69,7 +68,7 @@ const Person = () => {
         ))}
       </div>
 
-      {/* Pagination Controls */}
+     
       <div className='flex justify-center my-2'>
         <button
           onClick={handlePreviousPage}

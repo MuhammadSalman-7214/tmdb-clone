@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import Home from './pages/Home';
 import Navbar from './components/Navbar';
@@ -11,6 +10,7 @@ import DetailPage from './pages/DetailPage';
 import ResetPassword from './pages/ResetPassword';
 import SearchItemsPage from './pages/SearchItemsPage';
 import PersonDetailPage from './pages/PersonDetailPage';
+import FeaturedPage from './pages/FeaturedPage';
 
 function App() {
   return (
@@ -28,6 +28,7 @@ function App() {
         
         <Route path="/detail/:mediaType/:id" element={<DetailPage />} />
         <Route path="/search-results" element={<SearchItemsPage />} />
+        <Route path="/featured-page" element={<FeaturedPage />} />
       </Routes>
       <Footer/>
     </div>

@@ -1,12 +1,6 @@
 import React from 'react';
 
 const Footer = () => {
-  const gradientText = {
-    backgroundImage: 'linear-gradient(45deg, #17ead9, #6078ea)',
-    WebkitBackgroundClip: 'text',
-    backgroundClip: 'text',
-    color: 'transparent',
-  };
 
   return (
     <div className='lg:px-230px' style={{ backgroundColor: 'rgb(3, 37, 65)' }}>

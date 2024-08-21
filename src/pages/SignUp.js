@@ -32,7 +32,6 @@ const SignUp = () => {
       const response = await axios.post(
         `https://api.themoviedb.org/3/authentication/signup?api_key=${apiKey}`,
         {
-          // Your signup data
           username: formData.username,
           password: formData.password,
           email: formData.email,
@@ -40,7 +39,6 @@ const SignUp = () => {
       );
   
       if (response.status === 200) {
-        // If signup is successful, redirect to the home page
         navigate('/');
       } else {
         setError('Signup failed. Please try again.');

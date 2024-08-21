@@ -76,8 +76,6 @@ const FreeToWatch = () => {
       const endpoint = selected === 'movies' ? 'discover/movie' : 'discover/tv';
       const response = await fetch(`https://api.themoviedb.org/3/${endpoint}?api_key=${API_KEY}&language=en-US`);
   
-      // Log the response status
-      console.log('Response Status:', response.status);
   
       if (!response.ok) {
         throw new Error(`Network response was not ok: ${response.statusText}`);

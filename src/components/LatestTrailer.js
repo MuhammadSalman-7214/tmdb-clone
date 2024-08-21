@@ -178,14 +178,14 @@ const LatestTrailer = () => {
     >
       <div
         style={{
-        background: 'linear-gradient(78deg, #38aae3a6, #38aae3a6)',
+        background: 'linear-gradient(78deg, #658494a6, #658494a6)',
         position: 'absolute',
         top: 0,
         left: 0,
         right: 0,
         bottom: 0,
-        zIndex: 1, // Reduced to make sure it's behind the content
-        pointerEvents: 'none', // Ensures the overlay does not capture clicks
+        zIndex: 1,
+        pointerEvents: 'none',
       }}
       />
       <div className="relative z-10 w-full px-4 sm:px-8 lg:px-12">
