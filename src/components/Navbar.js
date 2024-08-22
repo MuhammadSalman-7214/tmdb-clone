@@ -69,7 +69,7 @@ const Navbar = () => {
     }, [isMobileMenuOpen]);
 
     return (
-        <div>
+        <div className='relative'>
             <nav style={{ backgroundColor: 'rgb(3, 37, 65)' }}>
                 <div className="max-w-screen-xl flex items-center justify-between mx-auto p-4">
                     
@@ -188,12 +188,27 @@ const Navbar = () => {
                                 <Link to='/'><img src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_2-d537fb228cf3ded904ef09b136fe3fec72548ebc1fea3fbbd1ad9e36364db38b.svg" className="h-9" alt="Flowbite Logo" /></Link>
                             </a>
                             <div className="flex items-center space-x-4 rtl:space-x-reverse ml-auto">
-                                <button
-                                    onClick={toggleSearchBar}
-                                    className="text-white text-sm"
-                                >
-                                    <i className="fa-solid fa-magnifying-glass"></i>
-                                </button>
+                                {!isSearchBarOpen && (
+                                        <li className='inline block'>
+                                            <button
+                                                onClick={toggleSearchBar}
+                                                className="block  px-3  text-white text-sm rounded md:p-0 dark:text-white dark:hover:text-white md:dark:hover:bg-transparent"
+                                            >
+                                                <i className="fa-solid fa-magnifying-glass text-lg text-blue-300"></i>
+                                            </button>
+                                        </li>
+
+                                    ) }
+                                    {isSearchBarOpen && (
+                                        <li className='inline block'>
+                                            <button
+                                                onClick={toggleSearchBar}
+                                                className="block  px-3  text-white text-sm rounded md:p-0 dark:text-white dark:hover:text-white md:dark:hover:bg-transparent"
+                                            >
+                                                <i class="fa-solid fa-xmark text-xl text-blue-300 "></i>
+                                            </button>
+                                        </li>
+                                    )}
                                 <Link to="/login" className="text-white text-sm">Login</Link>
                             </div>
                         </div>
@@ -249,10 +264,10 @@ const Navbar = () => {
 
             {/* Search Bar */}
             {isSearchBarOpen && (
-                <div className="fixed inset-x-0 top-15 bg-white py-2 z-20">
+                <div className="absolute top-15 right-0 left-0 top-15 bg-white py-2 z-20">
                     <div className='flex'>
                         <form onSubmit={handleSearch} className="w-full ms-3 flex">
-                            <i className="fa-solid fa-magnifying-glass text-black mt-1 pl-20 pr-4"></i>
+                            <i className="fa-solid fa-magnifying-glass text-black mt-1 lg:pl-20 pr-4"></i>
                             <input
                                 type="text"
                                 placeholder="Search for a movie, tv show, person..."
