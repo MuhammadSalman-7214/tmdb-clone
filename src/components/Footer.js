@@ -3,7 +3,7 @@ import React from 'react';
 const Footer = () => {
 
   return (
-    <div className='lg:px-230px' style={{ backgroundColor: 'rgb(3, 37, 65)' }}>
+    <div className='lg:px-230px ' style={{ backgroundColor: 'rgb(3, 37, 65)' }}>
       <footer className="body-font">
         <div className="container px-10 pt-10 pb-20 mx-auto flex md:items-center lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col">
           <div className="w-64 flex-shrink-0 md:mx-0 md:text-left flex flex-col justify-between">

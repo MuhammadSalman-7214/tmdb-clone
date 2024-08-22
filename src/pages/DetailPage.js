@@ -125,13 +125,14 @@ const DetailPage = () => {
             <div>
               <div className='flex'>
                 <h2 className='text-3xl font-semibold text-left text-white'>{itemDetail.title}</h2>
-                <p className='text-gray-300 text-lg mt-2'>({itemDetail.release_date})</p>
               </div>
               
-              <p className='text-white text-md text-left'>
+              <p className='text-white text-md text-left flex'>
+              <p className='text-white text-md'>{itemDetail.release_date}</p>
                 {itemDetail.genres.map((genre) => (
-                  <span key={genre.id} className='text-lg ml-2'>. {genre.name}</span>
+                  <span key={genre.id} className='text-md mx-2'>. {genre.name}</span>
                 ))}
+                <span>{Math.floor(itemDetail.runtime / 60)}h {itemDetail.runtime % 60}m</span>
               </p>
             </div>
 
